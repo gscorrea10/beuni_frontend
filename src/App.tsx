@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './styles/global.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface Product {
+  name: string;
+  image: string;
+  price: number;
+  total_stock: number;
 }
+
+const App: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(
+    undefined,
+  );
+
+  const handleSelectedProduct = (product: Product | null) => {
+    setSelectedProduct(product || undefined);
+  };
+
+  return (
+    <Router>
+      <Navbar />
+      <Dashboard
+        selectedProductName={selectedProduct}
+        setSelectedProductName={handleSelectedProduct}
+      />
+    </Router>
+  );
+};
 
 export default App;
